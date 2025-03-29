@@ -20,6 +20,7 @@ def main():
         var_dep,
         niv_significancia,
         titulo_diagrama,
+        ascii_output=True
     )
 
 

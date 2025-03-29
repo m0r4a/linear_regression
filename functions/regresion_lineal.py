@@ -6,7 +6,7 @@ from .coeficiente_correlacion import calcular_coeficiente_correlacion
 from rich.console import Console
 
 class RegresionLineal:
-    def __init__(self, x_arr, y_arr, var_ind, var_dep, niv_significancia=0.05, titulo_diagrama=None):
+    def __init__(self, x_arr, y_arr, var_ind, var_dep, niv_significancia=0.05, titulo_diagrama=None, ascii_output=False):
         """
         Inicializa el objeto de regresión lineal.
 
@@ -20,6 +20,7 @@ class RegresionLineal:
         """
         self.x = np.array(x_arr)
         self.y = np.array(y_arr)
+        self.ascii_output = ascii_output
         self.alpha = niv_significancia
         self.var_ind = var_ind
         self.var_dep = var_dep
@@ -279,6 +280,8 @@ class RegresionLineal:
         a = self.resultados["regresion"]["a"]
         b = self.resultados["regresion"]["b"]
 
+        print(self.ascii_output)
+
         # Usar la función graphic actualizada para incluir la línea de regresión
         graphic(
             self.x,
@@ -290,6 +293,7 @@ class RegresionLineal:
             save_path=save_path,
             a=a,
             b=b,
+            ascii_output=self.ascii_output
         )
 
     def obtener_ecuacion_recta(self):

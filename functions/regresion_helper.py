@@ -1,6 +1,6 @@
 from .regresion_lineal import RegresionLineal
 
-def ejecutar_regresion(x_arr, y_arr, var_ind, var_dep, niv_significancia=0.05, titulo_diagrama=None, save_path="./diagrama_dispersion.png"):
+def ejecutar_regresion(x_arr, y_arr, var_ind, var_dep, niv_significancia=0.05, titulo_diagrama=None, save_path="./diagrama_dispersion.png", ascii_output=False):
     """
     Función auxiliar para ejecutar todo el proceso de regresión lineal de manera sencilla.
 
@@ -16,7 +16,7 @@ def ejecutar_regresion(x_arr, y_arr, var_ind, var_dep, niv_significancia=0.05, t
     Retorna:
       - Un objeto RegresionLineal con todos los cálculos realizados.
     """
-    regresion = RegresionLineal(x_arr, y_arr, var_ind, var_dep, niv_significancia, titulo_diagrama)
+    regresion = RegresionLineal(x_arr, y_arr, var_ind, var_dep, niv_significancia, titulo_diagrama, ascii_output)
     regresion.mostrar_resultados()
     regresion.mostrar_grafico(save_path=save_path)
 
