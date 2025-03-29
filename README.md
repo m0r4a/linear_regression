@@ -49,8 +49,8 @@ El proyecto utiliza las siguientes librerías:
 1. **Clonar el repositorio:**
 
    ```bash
-   git clone https://github.com/m0r4a/correlation.git
-   cd correlation
+   git clone https://github.com/m0r4a/linear_regression.git
+   cd linear_regression
    ```
 
 2. **Crear y activar el entorno virtual:**
@@ -79,7 +79,7 @@ El archivo principal `main.py` contiene un ejemplo de cómo se configuran los da
 
 - Calcula la correlación entre los datos utilizando el método de Pearson.
 - Muestra el coeficiente de correlación y su conclusión en una tabla formateada en la terminal mediante `rich`.
-- Genera un diagrama de dispersión de los datos utilizando Matplotlib, guardando la imagen por defecto en `diagrama_dispersion.png`.
+- Genera un diagrama de dispersión de los datos utilizando Matplotlib, guardando la imagen por defecto en `./diagrama_dispersion.png`.
 
 Para ejecutar el análisis, simplemente ejecuta:
 

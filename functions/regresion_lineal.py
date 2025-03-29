@@ -280,8 +280,6 @@ class RegresionLineal:
         a = self.resultados["regresion"]["a"]
         b = self.resultados["regresion"]["b"]
 
-        print(self.ascii_output)
-
         # Usar la función graphic actualizada para incluir la línea de regresión
         graphic(
             self.x,

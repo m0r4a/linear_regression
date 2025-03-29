@@ -22,7 +22,7 @@ def main():
         titulo_diagrama,
 
 # uncomment for ascii support
-#       ascii_output=True
+        ascii_output=True
     )
 
 
