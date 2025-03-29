@@ -11,7 +11,7 @@ def calcular_coeficiente_correlacion(arr1, arr2, nombre_var_ind="(variable indep
       - nombre_var_dep: Es el nombre de la var. dependiente declarada (solo se usa para concluir)
 
     Retorna:
-      - Una tupla (coeficiente, conclusión) según la función estadística correspondiente.
+      - Una tupla (coeficiente, conclusión).
     """
 
     arr1, arr2 = (np.array(a) if not isinstance(a, np.ndarray) else a for a in (arr1, arr2))

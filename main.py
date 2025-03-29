@@ -19,7 +19,7 @@ def main():
         var_ind,
         var_dep,
         niv_significancia,
-        titulo_diagrama
+        titulo_diagrama,
     )
 
 

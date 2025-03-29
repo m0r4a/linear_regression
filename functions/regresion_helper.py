@@ -9,6 +9,7 @@ def ejecutar_regresion(x_arr, y_arr, var_ind, var_dep, niv_significancia=0.05, t
       - y_arr: Array de valores de la variable dependiente.
       - var_ind: Descripción de la variable independiente.
       - var_dep: Descripción de la variable dependiente.
+      - niv_significancia: Nivel de significancia para calcular las hipótesis.
       - titulo_diagrama: Título para el diagrama de dispersión.
       - save_path: Ruta donde guardar el diagrama de dispersión.
 

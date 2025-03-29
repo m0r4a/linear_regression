@@ -15,6 +15,7 @@ class RegresionLineal:
           - y_arr: Array de valores de la variable dependiente.
           - var_ind: Descripción de la variable independiente.
           - var_dep: Descripción de la variable dependiente.
+          - niv_significancia: Nivel de significancia para calcular las hipótesis.
           - titulo_diagrama: Título para el diagrama de dispersión.
         """
         self.x = np.array(x_arr)
@@ -288,7 +289,7 @@ class RegresionLineal:
             color="mediumslateblue",
             save_path=save_path,
             a=a,
-            b=b
+            b=b,
         )
 
     def obtener_ecuacion_recta(self):
@@ -300,6 +301,3 @@ class RegresionLineal:
             return f"ŷ = {a:.4f} + {b:.4f}x"
         else:
             return f"ŷ = {a:.4f} - {abs(b):.4f}x"
-
-
-# functions/regression_helper.py
