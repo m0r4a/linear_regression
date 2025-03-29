@@ -89,12 +89,6 @@ python main.py
 
 ## Screenshots
 
-### Tabla para el valor r
-
-<p align="center">
-    <img src="resources/table.png" alt="Tabla para el valor r"/>
-</p>
-
 ### Gráfico de dispersión: ASCII
 
 <p align="center">
@@ -105,6 +99,12 @@ python main.py
 
 <p align="center">
     <img src="resources/graphic_image.png" alt="Imagen del gráfico de dispersión"/>
+</p>
+
+### Tablas
+
+<p align="center">
+    <img src="resources/tables.png" alt="Tabla para el valor r"/>
 </p>
 
 ## Notas Adicionales
