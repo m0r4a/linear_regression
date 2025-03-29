@@ -202,4 +202,3 @@ def table(var_ind, var_dep, r_value, conclusion, n, resultados=None) -> None:
     table.add_row(concl_rho)
     console.print(Align(table, align="center"))
 
-    console.print(Align("Hecho por Gael Mora   ", align="right"))

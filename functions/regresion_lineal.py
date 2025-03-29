@@ -4,6 +4,7 @@ from .graphic import graphic
 from .table import table
 from .coeficiente_correlacion import calcular_coeficiente_correlacion
 from rich.console import Console
+from rich.align import Align
 
 class RegresionLineal:
     def __init__(self, x_arr, y_arr, var_ind, var_dep, niv_significancia=0.05, titulo_diagrama=None, ascii_output=False):
@@ -72,6 +73,7 @@ class RegresionLineal:
 
         # Realizar todos los cálculos
         self._calcular_todo()
+
 
     def _calcular_todo(self):
         """Realiza todos los cálculos necesarios para la regresión lineal."""
@@ -303,3 +305,8 @@ class RegresionLineal:
             return f"ŷ = {a:.4f} + {b:.4f}x"
         else:
             return f"ŷ = {a:.4f} - {abs(b):.4f}x"
+
+    def creditos(self):
+        """Imprime en la terminal los créditos"""
+        console = Console()
+        console.print(Align("\nHecho por Gael Mora   ", align="right"))
