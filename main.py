@@ -21,8 +21,8 @@ def main():
         niv_significancia,
         titulo_diagrama,
 
-# uncomment for ascii support
-        ascii_output=True
+# descomenta para tener un output en ASCII
+#        ascii_output=True
     )
 
 
