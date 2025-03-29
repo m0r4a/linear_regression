@@ -104,7 +104,7 @@ python main.py
 ### Tablas
 
 <p align="center">
-    <img src="resources/tables.png" alt="Tabla para el valor r"/>
+    <img src="resources/tables.jpg" alt="Tabla para el valor r"/>
 </p>
 
 ## Notas Adicionales
