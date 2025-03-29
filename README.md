@@ -115,4 +115,3 @@ python main.py
 ## Contribuciones
 
 Este código está pensado para ser de un solo uso. Se aceptan contribuciones en forma de correcciones o mejoras en el código, pero se prefiere no añadir nuevas funcionalidades mediante PRs.
-```
