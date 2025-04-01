@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.stats import t
+from scipy.stats import norm
 from .graphic import graphic
 from .table import table
 from .coeficiente_correlacion import calcular_coeficiente_correlacion
@@ -59,14 +60,16 @@ class RegresionLineal:
             },
             "prueba_beta": {
                 "error_std_b": 0,
-                "t_stat_b": 0,
-                "t_stat_tabla": 0,
+                "ep_b": 0,
+                "stat_tabla": 0,
+                "stat_used": "",
                 "conclusion": ""
             },
             "prueba_rho": {
                 "error_std_r": 0,
-                "t_stat_r": 0,
-                "t_stat_tabla": 0,
+                "ep_r": 0,
+                "stat_tabla": 0,
+                "stat_used": "",
                 "conclusion": ""
             }
         }
@@ -102,11 +105,11 @@ class RegresionLineal:
         sum_y2 = np.sum(self.y ** 2)
 
         # Guardar en resultados
-        self.resultados["regresion"]["sum_x"] = sum_x
-        self.resultados["regresion"]["sum_y"] = sum_y
-        self.resultados["regresion"]["sum_xy"] = sum_xy
-        self.resultados["regresion"]["sum_x2"] = sum_x2
-        self.resultados["regresion"]["sum_y2"] = sum_y2
+        self.resultados["regresion"]["sum_x"] = round(sum_x, 4)
+        self.resultados["regresion"]["sum_y"] = round(sum_y, 4)
+        self.resultados["regresion"]["sum_xy"] = round(sum_xy, 4)
+        self.resultados["regresion"]["sum_x2"] = round(sum_x2, 4)
+        self.resultados["regresion"]["sum_y2"] = round(sum_y2, 4)
 
 
     def _calcular_regresion(self):
@@ -118,8 +121,8 @@ class RegresionLineal:
         mean_x = sum_x / self.n
         mean_y = sum_y / self.n
 
-        self.resultados["regresion"]["mean_x"] = mean_x
-        self.resultados["regresion"]["mean_y"] = mean_y
+        self.resultados["regresion"]["mean_x"] = round(mean_x, 4)
+        self.resultados["regresion"]["mean_y"] = round(mean_y, 4)
 
         # Calcular Sxx, Syy, Sxy
         sum_x2 = self.resultados["regresion"]["sum_x2"]
@@ -130,9 +133,9 @@ class RegresionLineal:
         Syy = sum_y2 - self.n * mean_y ** 2
         Sxy = sum_xy - self.n * mean_x * mean_y
 
-        self.resultados["regresion"]["Sxx"] = Sxx
-        self.resultados["regresion"]["Syy"] = Syy
-        self.resultados["regresion"]["Sxy"] = Sxy
+        self.resultados["regresion"]["Sxx"] = round(Sxx, 4)
+        self.resultados["regresion"]["Syy"] = round(Syy, 4)
+        self.resultados["regresion"]["Sxy"] = round(Sxy, 4)
 
         # Calcular coeficientes a y b
         if Sxx == 0:
@@ -174,13 +177,20 @@ class RegresionLineal:
         """Calcula pruebas de hipótesis para β y ρ."""
         # Calcular el estadistico en tabla
         if self.n <= 2:
-            t_critico = 0  # No hay grados de libertad suficientes
-        else:
+            stat_tabla = 0  # No hay grados de libertad suficientes
+        elif self.n < 30:
             gl = self.n - 2
-            t_critico = t.ppf(1 - self.alpha / 2, gl)
+            stat_tabla = t.ppf(1 - self.alpha / 2, gl)
+            stat_used = "t"
+        else:
+            stat_tabla = norm.ppf(1 - self.alpha / 2)
+            stat_used = "z"
 
-        self.resultados["prueba_beta"]["t_stat_tabla"] = t_critico
-        self.resultados["prueba_rho"]["t_stat_tabla"] = t_critico
+        self.resultados["prueba_beta"]["stat_tabla"] = stat_tabla
+        self.resultados["prueba_beta"]["stat_used"] = stat_used
+
+        self.resultados["prueba_rho"]["stat_tabla"] = stat_tabla
+        self.resultados["prueba_rho"]["stat_used"] = stat_used
 
         # Prueba para β
         if self.resultados["determinacion"]["SCE"] > 0 and self.n > 2:
@@ -190,19 +200,19 @@ class RegresionLineal:
             self.resultados["prueba_beta"]["error_std_b"] = error_std_b
 
             b = self.resultados["regresion"]["b"]
-            t_stat_b = b / error_std_b
-            self.resultados["prueba_beta"]["t_stat_b"] = t_stat_b
+            ep_b = b / error_std_b
+            self.resultados["prueba_beta"]["ep_b"] = ep_b
 
             # Hacer la conclusión
-            if t_stat_b < -t_critico:
-                cond1 = f"[green]{t_stat_b:.4f} < -{t_critico:.4f}[/green]"  # Verde si se cumple
+            if ep_b < -stat_tabla:
+                cond1 = f"[green]{round(ep_b, 4)} < -{round(stat_tabla, 4)}[/green]"  # Verde si se cumple
             else:
-                cond1 = f"[red]{t_stat_b:.4f} < -{t_critico:.4f}[/red]"          # Rojo si no se cumple
+                cond1 = f"[red]{round(ep_b, 4)} < -{round(stat_tabla, 4)}[/red]"          # Rojo si no se cumple
 
-            if t_stat_b > t_critico:
-                cond2 = f"[green]{t_stat_b:.4f} > {t_critico:.4f}[/green]"        # Verde si se cumple
+            if ep_b > stat_tabla:
+                cond2 = f"[green]{round(ep_b, 4)} > {round(stat_tabla, 4)}[/green]"        # Verde si se cumple
             else:
-                cond2 = f"[red]{t_stat_b:.4f} > {t_critico:.4f}[/red]"              # Rojo si no se cumple
+                cond2 = f"[red]{round(ep_b, 4)} > {round(stat_tabla, 4)}[/red]"              # Rojo si no se cumple
 
             if cond1 or cond2:
                 conclusion_rr = ("Como se cumple la región de rechazo entonces se rechaza Hₒ.\n"
@@ -230,19 +240,19 @@ class RegresionLineal:
             error_std_r = np.sqrt((1 - r**2) / (self.n - 2))
             self.resultados["prueba_rho"]["error_std_r"] = error_std_r
 
-            t_stat_r = r / error_std_r
-            self.resultados["prueba_rho"]["t_stat_r"] = t_stat_r
+            ep_r = r / error_std_r
+            self.resultados["prueba_rho"]["ep_r"] = ep_r
 
             # Hacer la conclusión
-            if t_stat_r < -t_critico:
-                cond1 = f"[green]{t_stat_r:.4f} < -{t_critico:.4f}[/green]"  # Verde si se cumple
+            if ep_r < -stat_tabla:
+                cond1 = f"[green]{round(ep_r, 4)} < -{round(stat_tabla, 4)}[/green]"  # Verde si se cumple
             else:
-                cond1 = f"[red]{t_stat_r:.4f} < -{t_critico:.4f}[/red]"          # Rojo si no se cumple
+                cond1 = f"[red]{round(ep_r, 4)} < -{round(stat_tabla, 4)}[/red]"          # Rojo si no se cumple
 
-            if t_stat_r > t_critico:
-                cond2 = f"[green]{t_stat_r:.4f} > {t_critico:.4f}[/green]"        # Verde si se cumple
+            if ep_r > stat_tabla:
+                cond2 = f"[green]{round(ep_r, 4)} > {round(stat_tabla, 4)}[/green]"        # Verde si se cumple
             else:
-                cond2 = f"[red]{t_stat_r:.4f} > {t_critico:.4f}[/red]"              # Rojo si no se cumple
+                cond2 = f"[red]{round(ep_r, 4)} > {round(stat_tabla, 4)}[/red]"              # Rojo si no se cumple
 
             if cond1 or cond2:
                 conclusion_rr = ("Como se cumple la región de rechazo entonces se rechaza Hₒ.\n"
