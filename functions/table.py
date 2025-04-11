@@ -3,6 +3,7 @@ from rich.table import Table
 from rich.align import Align
 from rich import box
 
+
 def table(var_ind, var_dep, r_value, conclusion, n, resultados=None) -> None:
     """
     Crea y muestra una tabla completa con los resultados de la regresión lineal.
@@ -21,8 +22,10 @@ def table(var_ind, var_dep, r_value, conclusion, n, resultados=None) -> None:
     console = Console()
 
     # Primera tabla: Declaración de variables
-    table = Table(title="Declaración de variables", box=box.ROUNDED, show_header=False)
-    table.add_row("Sea x " + var_ind + " (variable independiente)\n    y " + var_dep + " (variable dependiente)")
+    table = Table(title="Declaración de variables",
+                  box=box.ROUNDED, show_header=False)
+    table.add_row("Sea x " + var_ind + " (variable independiente)\n    y " +
+                  var_dep + " (variable dependiente)")
     table.add_section()
     table.add_row("(Justificación de la relación de las variables)")
     console.print(Align(table, align="center"))
@@ -30,7 +33,8 @@ def table(var_ind, var_dep, r_value, conclusion, n, resultados=None) -> None:
     print()
 
     # Segunda tabla: Diagrama de dispersión (referencia)
-    table = Table(title="(Aquí va el diagrama de dispersión)", box=box.ROUNDED, show_header=False)
+    table = Table(title="(Aquí va el diagrama de dispersión)",
+                  box=box.ROUNDED, show_header=False)
     table.add_row("Se guarda por defecto en ./diagrama_dispersión.png")
     table.add_section()
     table.add_row("(Lectura del diagrama)")
@@ -39,7 +43,8 @@ def table(var_ind, var_dep, r_value, conclusion, n, resultados=None) -> None:
     print()
 
     # Tercera tabla: Correlación
-    table = Table(title="Correlación de las variables", show_header=False, box=box.ROUNDED, style="white")
+    table = Table(title="Correlación de las variables",
+                  show_header=False, box=box.ROUNDED, style="white")
     table.add_row(f"r = {round(float(r_value), 4)}")
     table.add_section()
     table.add_row(conclusion)
@@ -65,7 +70,8 @@ def table(var_ind, var_dep, r_value, conclusion, n, resultados=None) -> None:
         Sxy = reg.get("Sxy", 0)
 
     # Cuarta tabla: Suma de cuadrados
-    table = Table(title="Suma de cuadrados de regresión", show_header=False, box=box.ROUNDED, style="white")
+    table = Table(title="Suma de cuadrados de regresión",
+                  show_header=False, box=box.ROUNDED, style="white")
     table.add_row(f"n = {n}")
     table.add_section()
     table.add_row(f"Σx = {sum_x}", f"x̄ = {mean_x}")
@@ -92,7 +98,8 @@ def table(var_ind, var_dep, r_value, conclusion, n, resultados=None) -> None:
         a = reg.get("a", 0)
 
     # Quinta tabla: Estimadores
-    console.print(Align("Estimadores de mínimos cuadrados de α y β", align="center"))
+    console.print(
+        Align("Estimadores de mínimos cuadrados de α y β", align="center"))
     table = Table(show_header=False, box=box.ROUNDED, style="white")
     table.add_row(f"b = {b:.4f}")
     table.add_section()
@@ -129,7 +136,8 @@ def table(var_ind, var_dep, r_value, conclusion, n, resultados=None) -> None:
         r_squared_adj = det.get("r_squared_adj", 0)
 
     # Séptima tabla: Coeficiente de determinación ajustado
-    console.print(Align("Coeficiente de determinación ajustado R²ₐⱼ", align="center"))
+    console.print(
+        Align("Coeficiente de determinación ajustado R²ₐⱼ", align="center"))
     table = Table(show_header=False, box=box.ROUNDED, style="white")
     table.add_row(f"SCE = {SCE:.4f}")
     table.add_section()
@@ -152,11 +160,12 @@ def table(var_ind, var_dep, r_value, conclusion, n, resultados=None) -> None:
         error_std_b = p_beta.get("error_std_b", 0)
         ep_b = p_beta.get("ep_b", 0)
         stat_used = p_beta.get("stat_used")
-        stat_tabla = p_beta.get("t_stat_tabla", 0)
+        stat_tabla = p_beta.get("stat_tabla", 0)
         concl_beta = p_beta.get("conclusion", concl_beta)
 
     # Octava tabla: Pruebas para beta
-    table = Table(title="Pruebas para β", show_header=False, box=box.ROUNDED, style="white")
+    table = Table(title="Pruebas para β", show_header=False,
+                  box=box.ROUNDED, style="white")
     table.add_row("Hₒ: β = 0")
     table.add_row("Hₐ: β ≠ 0")
     table.add_section()
@@ -177,18 +186,19 @@ def table(var_ind, var_dep, r_value, conclusion, n, resultados=None) -> None:
     # Valores por defecto para prueba rho
     error_std_r = ep_r = stat_tabla = 0
     concl_rho = "(poner una variable de conclusion de hipotesis p)"
-    
+
     # Si se proporcionan resultados, usar valores calculados
     if resultados:
         p_rho = resultados.get("prueba_rho", {})
         error_std_r = p_rho.get("error_std_r", 0)
         ep_r = p_rho.get("ep_r", 0)
         stat_used = p_rho.get("stat_used")
-        stat_tabla = p_rho.get("t_stat_tabla", 0)
+        stat_tabla = p_rho.get("stat_tabla", 0)
         concl_rho = p_rho.get("conclusion", concl_rho)
 
     # Novena tabla: Pruebas para rho
-    table = Table(title="Pruebas para ρ", show_header=False, box=box.ROUNDED, style="white")
+    table = Table(title="Pruebas para ρ", show_header=False,
+                  box=box.ROUNDED, style="white")
     table.add_row("Hₒ: ρ = 0")
     table.add_row("Hₐ: ρ ≠ 0")
     table.add_section()
@@ -203,4 +213,3 @@ def table(var_ind, var_dep, r_value, conclusion, n, resultados=None) -> None:
     table.add_section()
     table.add_row(concl_rho)
     console.print(Align(table, align="center"))
-
