@@ -7,6 +7,7 @@ from .coeficiente_correlacion import calcular_coeficiente_correlacion
 from rich.console import Console
 from rich.align import Align
 
+
 class RegresionLineal:
     def __init__(self, x_arr, y_arr, var_ind, var_dep, niv_significancia=0.05, titulo_diagrama=None, ascii_output=False):
         """
@@ -26,7 +27,8 @@ class RegresionLineal:
         self.alpha = niv_significancia
         self.var_ind = var_ind
         self.var_dep = var_dep
-        self.titulo_diagrama = titulo_diagrama or f"Diagrama de dispersión de {var_ind} vs {var_dep}"
+        self.titulo_diagrama = titulo_diagrama or f"Diagrama de dispersión de {
+            var_ind} vs {var_dep}"
 
         # Cantidad de datos
         self.n = len(self.x)
@@ -77,14 +79,12 @@ class RegresionLineal:
         # Realizar todos los cálculos
         self._calcular_todo()
 
-
     def _calcular_todo(self):
         """Realiza todos los cálculos necesarios para la regresión lineal."""
         self._calcular_coeficiente_correlacion()
         self._calcular_regresion()
         self._calcular_coeficiente_determinacion()
         self._calcular_pruebas_hipotesis()
-
 
     def _calcular_coeficiente_correlacion(self):
         """Calcula el coeficiente de correlación de Pearson usando la función existente."""
@@ -110,7 +110,6 @@ class RegresionLineal:
         self.resultados["regresion"]["sum_xy"] = round(sum_xy, 4)
         self.resultados["regresion"]["sum_x2"] = round(sum_x2, 4)
         self.resultados["regresion"]["sum_y2"] = round(sum_y2, 4)
-
 
     def _calcular_regresion(self):
         """Calcula los parámetros de la regresión lineal."""
@@ -147,7 +146,6 @@ class RegresionLineal:
 
         self.resultados["regresion"]["b"] = b
         self.resultados["regresion"]["a"] = a
-
 
     def _calcular_coeficiente_determinacion(self):
         """Calcula el coeficiente de determinación."""
@@ -205,29 +203,39 @@ class RegresionLineal:
 
             # Hacer la conclusión
             if ep_b < -stat_tabla:
-                cond1 = f"[green]{round(ep_b, 4)} < -{round(stat_tabla, 4)}[/green]"  # Verde si se cumple
+                # Verde si se cumple
+                cond1 = f"[green]{
+                    round(ep_b, 4)} < -{round(stat_tabla, 4)}[/green]"
+                rechazo1 = False
             else:
-                cond1 = f"[red]{round(ep_b, 4)} < -{round(stat_tabla, 4)}[/red]"          # Rojo si no se cumple
+                # Rojo si no se cumple
+                cond1 = f"[red]{
+                    round(ep_b, 4)} < -{round(stat_tabla, 4)}[/red]"
+                rechazo1 = True
 
             if ep_b > stat_tabla:
-                cond2 = f"[green]{round(ep_b, 4)} > {round(stat_tabla, 4)}[/green]"        # Verde si se cumple
+                cond2 = f"[green]{round(ep_b, 4)} > {round(
+                    stat_tabla, 4)}[/green]"        # Verde si se cumple
+                rechazo2 = False
             else:
-                cond2 = f"[red]{round(ep_b, 4)} > {round(stat_tabla, 4)}[/red]"              # Rojo si no se cumple
+                # Rojo si no se cumple
+                cond2 = f"[red]{round(ep_b, 4)} > {round(stat_tabla, 4)}[/red]"
+                rechazo2 = True
 
-            if cond1 or cond2:
-                conclusion_rr = ("Como se cumple la región de rechazo entonces se rechaza Hₒ.\n"
-                                 "Entonces existe evidencia suficiente para rechazar que β = 0.\n"
-                                 "Entonces existe una relación lineal entre las variables X y Y."
-                                )
-            else:
+            if rechazo1 and rechazo2:
                 conclusion_rr = ("Como se no cumple la región de rechazo entonces se rechaza Hₒ.\n"
                                  "Entonces no existe evidencia suficiente para rechazar que β = 0.\n"
                                  "Entonces no existe una relación lineal entre las variables X y Y."
-                                )
+                                 )
+            else:
+                conclusion_rr = ("Como se cumple la región de rechazo entonces se rechaza Hₒ.\n"
+                                 "Entonces existe evidencia suficiente para rechazar que β = 0.\n"
+                                 "Entonces existe una relación lineal entre las variables X y Y."
+                                 )
 
             mensaje = (
                 "Prueba de hipótesis de dos colas:\n"
-              # "t < -t_α/2, n - 2 ó t > t_α/2, n - 2\n"
+                # "t < -t_α/2, n - 2 ó t > t_α/2, n - 2\n"
                 "Se evaluó: " + cond1 + " ó " + cond2 + "\n\n" +
                 conclusion_rr
             )
@@ -245,35 +253,44 @@ class RegresionLineal:
 
             # Hacer la conclusión
             if ep_r < -stat_tabla:
-                cond1 = f"[green]{round(ep_r, 4)} < -{round(stat_tabla, 4)}[/green]"  # Verde si se cumple
+                # Verde si se cumple
+                cond1 = f"[green]{
+                    round(ep_r, 4)} < -{round(stat_tabla, 4)}[/green]"
+                rechazo1 = False
             else:
-                cond1 = f"[red]{round(ep_r, 4)} < -{round(stat_tabla, 4)}[/red]"          # Rojo si no se cumple
+                # Rojo si no se cumple
+                cond1 = f"[red]{
+                    round(ep_r, 4)} < -{round(stat_tabla, 4)}[/red]"
+                rechazo1 = True
 
             if ep_r > stat_tabla:
-                cond2 = f"[green]{round(ep_r, 4)} > {round(stat_tabla, 4)}[/green]"        # Verde si se cumple
+                cond2 = f"[green]{round(ep_r, 4)} > {round(
+                    stat_tabla, 4)}[/green]"        # Verde si se cumple
+                rechazo2 = False
             else:
-                cond2 = f"[red]{round(ep_r, 4)} > {round(stat_tabla, 4)}[/red]"              # Rojo si no se cumple
+                # Rojo si no se cumple
+                cond2 = f"[red]{round(ep_r, 4)} > {round(stat_tabla, 4)}[/red]"
+                rechazo2 = True
 
-            if cond1 or cond2:
-                conclusion_rr = ("Como se cumple la región de rechazo entonces se rechaza Hₒ.\n"
-                                 "Entonces existe evidencia suficiente para rechazar que ρ = 0.\n"
-                                 "Entonces existe una correlación lineal entre las variables X y Y."
-                                )
-            else:
+            if rechazo1 and rechazo2:
                 conclusion_rr = ("Como se no cumple la región de rechazo entonces no se rechaza Hₒ.\n"
                                  "Entonces no existe evidencia suficiente para rechazar que ρ = 0.\n"
                                  "Entonces no existe una correlación lineal entre las variables X y Y."
-                                )
+                                 )
+            else:
+                conclusion_rr = ("Como se cumple la región de rechazo entonces se rechaza Hₒ.\n"
+                                 "Entonces existe evidencia suficiente para rechazar que ρ = 0.\n"
+                                 "Entonces existe una correlación lineal entre las variables X y Y."
+                                 )
 
             mensaje = (
                 "Prueba de hipótesis de dos colas:\n"
-              # "t < -t_α/2, n - 2 ó t > t_α/2, n - 2\n"
+                # "t < -t_α/2, n - 2 ó t > t_α/2, n - 2\n"
                 "Se evaluó: " + cond1 + " ó " + cond2 + "\n\n" +
                 conclusion_rr
             )
 
             self.resultados["prueba_rho"]["conclusion"] = mensaje
-
 
     def mostrar_resultados(self):
         """Muestra todos los resultados calculados en tablas."""
